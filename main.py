@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import json
 
 
@@ -21,6 +21,16 @@ def duties(list_type):
     with open("static/json/duties.json", encoding="utf-8") as file:
         p = json.load(file)
     return render_template("professions_list.html", list_type=list_type, duties=p, title="Список профессий")
+
+
+@app.route('/answer')
+@app.route('/answer_auto')
+def answer():
+    with open("static/json/anketa.json", encoding="utf-8") as file:
+        p = json.load(file)
+    with open("static/json/keys.json", encoding="utf-8") as file:
+        n = json.load(file)
+    return render_template("auto_answer.html", form=p, keys=n)
 
 
 if __name__ == '__main__':
